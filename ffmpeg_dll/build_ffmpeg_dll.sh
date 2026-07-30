@@ -817,8 +817,9 @@ fi
 
 if should_build SHADERC; then
     if [ ! -d "shaderc" ]; then
-        git clone --depth 1 https://github.com/google/shaderc shaderc
-        cd shaderc && git checkout tags/v2024.1 && "${PYTHON_BIN}" ./utils/git-sync-deps && cd ..
+        # shallow cloneでも指定タグを確実に取得する
+        git clone --depth 1 --branch v2024.1 https://github.com/google/shaderc shaderc
+        cd shaderc && "${PYTHON_BIN}" ./utils/git-sync-deps && cd ..
     elif [ ! -d "shaderc/third_party/spirv-tools" ] || [ ! -d "shaderc/third_party/spirv-headers" ]; then
         cd shaderc && "${PYTHON_BIN}" ./utils/git-sync-deps && cd ..
     fi
@@ -858,8 +859,8 @@ fi
 # [ libjpeg -> lcms2 ], shaderc, SPIRV-Cross, dovi_tool, libxxhash, vulkan-loader -> libplacebo
 # shadercがあればglslangは不要
 if should_build LIBPLACEBO && [ ! -d "libplacebo" ]; then
-    git clone --depth 1 --recursive https://code.videolan.org/videolan/libplacebo
-    cd libplacebo && git checkout tags/v7.351.0 && cd ..
+    # shallow cloneでも指定タグを確実に取得する
+    git clone --depth 1 --branch v7.351.0 --recursive https://code.videolan.org/videolan/libplacebo
 fi
 
 if should_build VVENC && [ ! -d "vvenc-1.13.1" ]; then
@@ -1183,6 +1184,7 @@ if should_build LIBUNIBREAK; then
         find "${SRC_DIR}" -type d -name "libunibreak-*" | xargs -i cp -r {} ./libunibreak
         start_build "libunibreak"
         cd ./libunibreak
+        autoreconf -fvi
         CFLAGS="${BUILD_CCFLAGS_SMALL}" \
         CPPFLAGS="${BUILD_CCFLAGS_SMALL}" \
         LDFLAGS="${BUILD_LDFLAGS}" \
