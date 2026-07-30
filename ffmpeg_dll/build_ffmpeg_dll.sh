@@ -1636,7 +1636,7 @@ fi
 cd $BUILD_DIR/$TARGET_ARCH
 if should_build LIBJPEG_TURBO && [ ! -f "libjpeg-turbo/CMakeLists.txt" ]; then
     mkdir -p ./libjpeg-turbo
-    cp -r "${SRC_DIR}/libjpeg-turbo-${VER_LIBJPEG_TURBO}/." ./libjpeg-turbo/
+    cp -r "${SRC_DIR}/libjpeg-turbo-3.1.1/." ./libjpeg-turbo/
     start_build "libjpeg-turbo"
     cd ./libjpeg-turbo
     mkdir -p build && cd build
