@@ -818,7 +818,7 @@ fi
 if should_build SHADERC; then
     if [ ! -d "shaderc" ]; then
         # shallow cloneでも指定タグを確実に取得する
-        git clone --depth 1 --branch v2024.1 https://github.com/google/shaderc shaderc
+        git clone --depth 1 --branch v2026.2 https://github.com/google/shaderc shaderc
         cd shaderc && "${PYTHON_BIN}" ./utils/git-sync-deps && cd ..
     elif [ ! -d "shaderc/third_party/spirv-tools" ] || [ ! -d "shaderc/third_party/spirv-headers" ]; then
         cd shaderc && "${PYTHON_BIN}" ./utils/git-sync-deps && cd ..
@@ -844,9 +844,9 @@ if should_build LCMS2 && [ ! -d "lcms2-2.17" ]; then
     tar xf lcms2-2.17.tar.gz
 fi
 
-if should_build VULKAN_LOADER && [ ! -d "Vulkan-Loader-1.3.295" ]; then
-    download_archive "Vulkan-Loader-v1.3.295.tar.gz" "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v1.3.295.tar.gz"
-    tar xf Vulkan-Loader-v1.3.295.tar.gz
+if should_build VULKAN_LOADER && [ ! -d "Vulkan-Loader-1.4.356" ]; then
+    download_archive "Vulkan-Loader-v1.4.356.tar.gz" "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v1.4.356.tar.gz"
+    tar xf Vulkan-Loader-v1.4.356.tar.gz
 fi
 
 if should_build ZIMG && [ ! -d "zimg-3.0.6" ]; then
