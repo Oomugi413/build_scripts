@@ -860,7 +860,7 @@ fi
 # shadercがあればglslangは不要
 if should_build LIBPLACEBO && [ ! -d "libplacebo" ]; then
     # shallow cloneでも指定タグを確実に取得する
-    git clone --depth 1 --branch v7.351.0 --recursive https://code.videolan.org/videolan/libplacebo
+    git clone --depth 1 --branch v7.360.1 --recursive https://code.videolan.org/videolan/libplacebo
 fi
 
 if should_build VVENC && [ ! -d "vvenc-1.13.1" ]; then
