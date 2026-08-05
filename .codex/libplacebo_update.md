@@ -32,3 +32,11 @@ Vulkan Loader/Headerを1.4.356へ更新した後、GitHub Actionsのbase image�
 - 旧版専用の `loader/vk_loader_platform.h` hunkを削除
 
 実際のVulkan Loader v1.4.356ソースに対する `patch --dry-run` が成功することを確認した。
+
+## 再実行ログに基づくLinux static化の追加修正
+
+GitHub Actions Build Linux Packages #24 の再実行（attempt 2）では、`FFMPEG_DLL_REV=c8e1d0410120a612a2e8a1d7e025a570f3afa6a7` が指定され、Docker内でも `c8e1d04` がcheckoutされていたため、build_scriptsの再読込自体は正常に行われていた。
+
+一方、Vulkan Loaderのビルド結果は `libvulkan.so.1.4.356` であり、`build_ffmpeg_dll.sh` のLinux向け確認処理が要求する `libvulkan.a` が存在しなかった。1.4.356対応パッチにLinux側の `add_library(vulkan SHARED)` → `STATIC` のhunkが不足していたことが原因だった。
+
+`ffmpeg_dll/patches/vulkan_loader_static.diff` にLinux側のstatic化hunkを追加した。Vulkan Loader v1.4.356ソースへ実際に適用し、Windows側およびLinux側のloader targetが `STATIC` になることを確認した。
