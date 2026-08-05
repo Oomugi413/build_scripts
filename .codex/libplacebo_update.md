@@ -19,3 +19,16 @@ libplacebo関連フィルタで発生していたSPIR-V不整合を解消する�
 - Vulkan Loader/Header: `v1.3.295` → `v1.4.356`
 
 libplacebo 7.360.1が要求するVulkan 1.4およびshadercの対応環境を揃え、Vulkan stub版ではなくVulkan実装版を生成できる構成にした。
+
+## Vulkan Loader 1.4.356 対応パッチの修正
+
+Vulkan Loader/Headerを1.4.356へ更新した後、GitHub Actionsのbase imageビルドで、staticリンク用パッチが旧版のソース構造を前提としていたため適用に失敗した。
+
+対象ファイル `ffmpeg_dll/patches/vulkan_loader_static.diff` をVulkan Loader 1.4.356対応版へ更新した。主な変更は以下のとおり。
+
+- `loader/CMakeLists.txt` のstaticライブラリ化およびリンク指定を1.4.356の構造に合わせて修正
+- `loader/loader_windows.c` のstaticビルド向け修正を1.4.356のソース位置に合わせて更新
+- `loader/vulkan.pc.in` のprivate library情報の反映を維持
+- 旧版専用の `loader/vk_loader_platform.h` hunkを削除
+
+実際のVulkan Loader v1.4.356ソースに対する `patch --dry-run` が成功することを確認した。
